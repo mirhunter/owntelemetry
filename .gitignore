@@ -3,3 +3,5 @@ examples/mqtt_client.conf
 examples/*.log
 .claude/
 CLAUDE.md
+__pycache__/
+*.pyc
