@@ -51,7 +51,10 @@ def load_config():
     return cfg
 
 
-def make_callbacks(ot, logger, base_topic):
+def make_callbacks(ot, key_store, logger, base_topic):
+    def get_key(endpoint_id):
+        return key_store.get(endpoint_id)
+
     def on_connect(client, userdata, flags, rc):
         if rc == 0:
             sub = f"{base_topic}/#"
@@ -63,7 +66,7 @@ def make_callbacks(ot, logger, base_topic):
     def on_message(client, userdata, msg):
         received_at = int(time.time())
         try:
-            packet = ot.decode(msg.payload)
+            packet = ot.decode(msg.payload, get_key=get_key)
         except Exception as exc:
             packet = {"_error": str(exc), "_raw_bytes": msg.payload.hex()}
 
@@ -89,10 +92,17 @@ def main():
 
     ot = OwnTelemetry(PROFILES_DIR, ALL_PROFILES)
 
+    key_store = {}
+    if cfg.has_section("keys"):
+        for eid_hex, key_hex in cfg.items("keys"):
+            key_store[bytes.fromhex(eid_hex)] = bytes.fromhex(key_hex)
+
     logger = setup_logging(log_file)
     logger.info(json.dumps({"_event": "starting", "_broker": f"{host}:{port}", "_time": int(time.time())}))
+    if key_store:
+        logger.info(json.dumps({"_event": "keys_loaded", "_count": len(key_store), "_time": int(time.time())}))
 
-    on_connect, on_message, on_disconnect = make_callbacks(ot, logger, base_topic)
+    on_connect, on_message, on_disconnect = make_callbacks(ot, key_store, logger, base_topic)
 
     client = mqtt.Client()
     client.username_pw_set(username, password)

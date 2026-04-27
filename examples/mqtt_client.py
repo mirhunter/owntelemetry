@@ -137,7 +137,7 @@ def collect_status(net_rx, net_tx):
 
 # ── Alert checking ────────────────────────────────────────────────────────────
 
-def check_alerts(ot, metrics, thresholds, endpoint_id, topic, client, active_alerts, debug, json_wire):
+def check_alerts(ot, metrics, thresholds, endpoint_id, topic, client, active_alerts, debug, json_wire, enc_key):
     checks = [
         (EVENT_HIGH_CPU_LOAD,     "cpu_load",    thresholds.getfloat("cpu_load")),
         (EVENT_HIGH_CPU_TEMP,     "cpu_temp",    thresholds.getfloat("cpu_temp")),
@@ -145,19 +145,19 @@ def check_alerts(ot, metrics, thresholds, endpoint_id, topic, client, active_ale
         (EVENT_HIGH_DISK_USAGE,   "disk_used",   thresholds.getfloat("disk_used")),
         (EVENT_HIGH_SWAP_USAGE,   "swap_used",   thresholds.getfloat("swap_used")),
     ]
-    for event_code, key, threshold in checks:
-        value = metrics[key]
+    for event_code, metric_key, threshold in checks:
+        value = metrics[metric_key]
         was_active = active_alerts.get(event_code, False)
         if value >= threshold and not was_active:
             payload, used = ot.encode(PROFILE, 2, {
                 "id": endpoint_id, "ack": True,
                 "event_code": event_code, "timestamp": int(time.time()),
                 "value": round(value, 2),
-            }, json_wire=json_wire)
+            }, key=enc_key, json_wire=json_wire)
             if debug:
                 debug_print("alert", used)
             client.publish(topic, payload, qos=1)
-            print(f"ALERT  event_code={event_code} {key}={value:.1f} (threshold={threshold})")
+            print(f"ALERT  event_code={event_code} {metric_key}={value:.1f} (threshold={threshold})")
             active_alerts[event_code] = True
         elif value < threshold:
             active_alerts[event_code] = False
@@ -193,7 +193,7 @@ def handle_command(command_code, command_data, state):
         return CMD_UNKNOWN
 
 
-def handle_server_packet(data, ot, endpoint_id, topic, client, state, debug, json_wire):
+def handle_server_packet(data, ot, endpoint_id, topic, client, state, debug, json_wire, enc_key):
     try:
         packet = ot.decode(data)
     except Exception:
@@ -210,7 +210,7 @@ def handle_server_packet(data, ot, endpoint_id, topic, client, state, debug, jso
     if pkt_type == P0_PING:
         payload, used = ot.encode(P0, P0_PONG, {
             "id": endpoint_id, "ping_mid": pkt_mid,
-        }, json_wire=json_wire)
+        }, key=enc_key, json_wire=json_wire)
         if debug:
             debug_print("pong", used)
         client.publish(topic, payload, qos=1)
@@ -220,7 +220,7 @@ def handle_server_packet(data, ot, endpoint_id, topic, client, state, debug, jso
         status = handle_command(packet.get("command_code"), packet.get("command_data"), state)
         payload, used = ot.encode(P0, P0_COMMAND_ACK, {
             "id": endpoint_id, "command_mid": pkt_mid, "status": status,
-        }, json_wire=json_wire)
+        }, key=enc_key, json_wire=json_wire)
         if debug:
             debug_print("command_ack", used)
         client.publish(topic, payload, qos=1)
@@ -229,7 +229,7 @@ def handle_server_packet(data, ot, endpoint_id, topic, client, state, debug, jso
     elif pkt_type == P0_PROVISION:
         payload, used = ot.encode(P0, P0_PROVISION_ACK, {
             "id": endpoint_id, "provision_mid": pkt_mid, "status": PROV_REJECTED,
-        }, json_wire=json_wire)
+        }, key=enc_key, json_wire=json_wire)
         if debug:
             debug_print("provision_ack", used)
         client.publish(topic, payload, qos=1)
@@ -258,6 +258,8 @@ def main():
     thresholds = cfg["thresholds"]
     debug      = args.debug or cfg.getboolean("client", "debug", fallback=False)
     json_wire  = args.json  or cfg.getboolean("client", "json",  fallback=False)
+    key_hex    = cfg.get("client", "key", fallback="").strip()
+    enc_key    = bytes.fromhex(key_hex) if key_hex else None
 
     ot = OwnTelemetry(PROFILES_DIR, [P0, PROFILE])
 
@@ -274,6 +276,8 @@ def main():
         print("Debug       : on")
     if json_wire:
         print("Wire format : JSON")
+    if enc_key:
+        print("Encryption  : on")
 
     active_alerts = {}
     state         = {"interval": interval, "request_birth": False, "shutdown": False}
@@ -282,7 +286,7 @@ def main():
     will_payload, _ = ot.encode(P0, P0_WILL, {
         "id": endpoint_id, "mid": 255,
         "reason": REASON_ERROR, "timestamp": int(time.time()),
-    }, json_wire=json_wire)
+    }, key=enc_key, json_wire=json_wire)
 
     client = mqtt.Client()
     client.username_pw_set(username, password)
@@ -296,14 +300,14 @@ def main():
         payload, used = ot.encode(P0, P0_BIRTH, {
             "id": endpoint_id, "ack": True,
             "profiles": [P0, PROFILE], "interval": state["interval"],
-        }, json_wire=json_wire)
+        }, key=enc_key, json_wire=json_wire)
         if debug:
             debug_print("birth", used)
         mqttc.publish(topic, payload, qos=1)
         print(f"BIRTH  profiles=[{P0}, {PROFILE}] interval={state['interval']}s")
 
     def on_message(mqttc, userdata, msg):
-        handle_server_packet(msg.payload, ot, endpoint_id, topic, mqttc, state, debug, json_wire)
+        handle_server_packet(msg.payload, ot, endpoint_id, topic, mqttc, state, debug, json_wire, enc_key)
 
     client.on_connect = on_connect
     client.on_message = on_message
@@ -326,7 +330,7 @@ def main():
                 payload, used = ot.encode(P0, P0_BIRTH, {
                     "id": endpoint_id, "ack": True,
                     "profiles": [P0, PROFILE], "interval": state["interval"],
-                }, json_wire=json_wire)
+                }, key=enc_key, json_wire=json_wire)
                 if debug:
                     debug_print("birth", used)
                 client.publish(topic, payload, qos=1)
@@ -335,7 +339,7 @@ def main():
             status_fields, metrics = collect_status(net_rx, net_tx)
             payload, used = ot.encode(PROFILE, 1, {
                 "id": endpoint_id, **status_fields,
-            }, json_wire=json_wire)
+            }, key=enc_key, json_wire=json_wire)
             if debug:
                 debug_print("status", used)
             client.publish(topic, payload, qos=0)
@@ -344,7 +348,7 @@ def main():
                 f"mem={metrics['memory_used']:.1f}% disk={metrics['disk_used']:.1f}%"
             )
 
-            check_alerts(ot, metrics, thresholds, endpoint_id, topic, client, active_alerts, debug, json_wire)
+            check_alerts(ot, metrics, thresholds, endpoint_id, topic, client, active_alerts, debug, json_wire, enc_key)
 
             # Sleep in 1s increments so interval/shutdown changes take effect promptly
             deadline = time.monotonic() + state["interval"]
@@ -357,7 +361,7 @@ def main():
     # Graceful shutdown: send will with reason=shutdown before disconnecting
     payload, used = ot.encode(P0, P0_WILL, {
         "id": endpoint_id, "reason": REASON_SHUTDOWN, "timestamp": int(time.time()),
-    }, json_wire=json_wire)
+    }, key=enc_key, json_wire=json_wire)
     if debug:
         debug_print("will", used)
     client.publish(topic, payload, qos=1)

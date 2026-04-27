@@ -7,3 +7,10 @@ base_topic = ot
 
 [server]
 log_file = owntelemetry.log
+
+; Per-endpoint encryption keys — add one entry per encrypted endpoint.
+; Run the client once to find its endpoint ID in the startup output, then
+; copy it here alongside the same key configured in mqtt_client.conf.
+;
+; [keys]
+; 0cff64593f149b39 = 00112233445566778899aabbccddeeff

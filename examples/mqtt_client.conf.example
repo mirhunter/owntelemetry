@@ -9,6 +9,7 @@ base_topic = ot
 interval = 30
 debug = false
 json = false
+; key = 00112233445566778899aabbccddeeff  (16-byte hex; omit or leave blank to disable encryption)
 
 [thresholds]
 cpu_load = 90.0
