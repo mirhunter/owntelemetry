@@ -1,0 +1,11 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "owntelemetry"
+version = "0.1.0"
+description = "OwnTelemetry protocol codec — encode and decode CBOR packets driven by profile schemas"
+requires-python = ">=3.9"
+license = {text = "CC0-1.0"}
+dependencies = ["cbor2>=5.4"]

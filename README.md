@@ -123,6 +123,38 @@ The base topic (`ot`) is configurable in the conf file.
 
 ---
 
+## Libraries
+
+A codec library handles encoding and decoding for you, driven directly by the profile schemas.
+
+```python
+from owntelemetry import OwnTelemetry
+
+ot = OwnTelemetry("./profiles", [0, 51])
+
+payload, used = ot.encode(51, 1, {
+    "id": endpoint_id,
+    "timestamp": int(time.time()),
+    "cpu_load": 45.2,
+    ...
+})
+mid_used = used["mid"]   # auto-generated; override by passing "mid" in fields
+
+packet = ot.decode(payload)
+# → {"profile": 51, "id": "abc...", "cpu_load": 45.2,
+#    "_profile_name": "Server Health Monitor", "_type_name": "status"}
+```
+
+Install the Python library:
+
+```bash
+pip install lib/python
+```
+
+Libraries for other languages are planned.
+
+---
+
 ## Repository Layout
 
 ```
@@ -131,6 +163,8 @@ profiles/
   0.json / 0.md     Profile 0 — System
   1.json / 1.md     Profile 1 — Basic GPS Telemetry
   ...               (all standard and example profiles)
+lib/
+  python/           Python codec library (pip install lib/python)
 examples/
   mqtt_client.py    Reference MQTT client (Profile 0 + 51)
   mqtt_server.py    Reference MQTT server (decodes all known profiles)
