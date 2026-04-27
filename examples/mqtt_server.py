@@ -71,6 +71,7 @@ def make_callbacks(ot, key_store, logger, base_topic):
             packet = {"_error": str(exc), "_raw_bytes": msg.payload.hex()}
 
         packet["_topic"]       = msg.topic
+        packet["_wire_bytes"]  = len(msg.payload)
         packet["_received_at"] = received_at
         logger.info(json.dumps(packet, default=str))
 
