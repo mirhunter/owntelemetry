@@ -310,3 +310,5 @@ class OwnTelemetry:
             packet["_command_status"] = schema.command_status_codes.get(packet["status"], "unknown")
         if "status" in packet and type_num == 8 and schema.provision_status_codes:
             packet["_provision_status"] = schema.provision_status_codes.get(packet["status"], "unknown")
+        if "format" in packet and schema.image_format_codes:
+            packet["_format_name"] = schema.image_format_codes.get(packet["format"], "unknown")

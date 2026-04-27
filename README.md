@@ -49,6 +49,7 @@ All conformant endpoints implement Profile 0. It handles device lifecycle (birth
 | 7 | Power/Energy Monitor |
 | 8 | Marine |
 | 9 | Soil/Agricultural Sensor |
+| 10 | Doorbell |
 
 ### Open (51–255)
 

@@ -1,0 +1,68 @@
+{
+  "profile": 10,
+  "name": "Doorbell",
+  "version": 1,
+  "types": {
+    "1": "button_event",
+    "2": "image_chunk"
+  },
+  "image_format_codes": {
+    "1": "jpeg",
+    "2": "png",
+    "3": "bmp"
+  },
+  "packets": {
+    "1": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "timestamp",
+        "6": "camera"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "timestamp": "uint32",
+        "camera": "bool"
+      },
+      "optional": []
+    },
+    "2": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "timestamp",
+        "6": "button_mid",
+        "7": "seq",
+        "8": "total",
+        "9": "data",
+        "10": "format"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "timestamp": "uint32",
+        "button_mid": "uint8",
+        "seq": "uint16",
+        "total": "uint16",
+        "data": "bytes",
+        "format": "uint8"
+      },
+      "optional": ["format"]
+    }
+  }
+}

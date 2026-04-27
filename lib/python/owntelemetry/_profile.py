@@ -24,6 +24,7 @@ class Profile:
     event_codes: dict           = field(default_factory=dict)
     provision_codes: dict       = field(default_factory=dict)
     provision_status_codes: dict = field(default_factory=dict)
+    image_format_codes: dict    = field(default_factory=dict)
 
 
 def _int_keys(d: dict) -> dict:
@@ -61,6 +62,7 @@ def load_profile(profiles_dir: str, number: int) -> Profile:
         event_codes=_int_keys(data.get("event_codes", {})),
         provision_codes=_int_keys(data.get("provision_codes", {})),
         provision_status_codes=_int_keys(data.get("provision_status_codes", {})),
+        image_format_codes=_int_keys(data.get("image_format_codes", {})),
     )
 
 

@@ -24,7 +24,7 @@ from owntelemetry import OwnTelemetry
 CONFIG_FILE  = os.path.join(os.path.dirname(__file__), "mqtt_server.conf")
 PROFILES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "profiles")
 
-ALL_PROFILES = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 51, 52]
+ALL_PROFILES = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 51, 52]
 
 
 def setup_logging(log_file):
