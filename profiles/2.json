@@ -1,0 +1,104 @@
+{
+  "profile": 2,
+  "name": "Advanced GPS Telemetry — Fleet Vehicle",
+  "version": 3,
+  "types": {
+    "1": "location",
+    "2": "event"
+  },
+  "event_codes": {
+    "1": "harsh_accel",
+    "2": "harsh_brake",
+    "3": "harsh_corner"
+  },
+  "packets": {
+    "1": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "timestamp",
+        "6": "fix",
+        "7": "lat",
+        "8": "lon",
+        "9": "alt",
+        "10": "accuracy",
+        "11": "speed",
+        "12": "heading",
+        "13": "satellites",
+        "14": "hdop",
+        "15": "ignition",
+        "16": "moving",
+        "17": "odometer",
+        "18": "rpm",
+        "19": "fuel_level",
+        "20": "engine_temp",
+        "21": "battery_voltage"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "timestamp": "uint32",
+        "fix": "uint8",
+        "lat": "float32",
+        "lon": "float32",
+        "alt": "float32",
+        "accuracy": "float32",
+        "speed": "float32",
+        "heading": "float32",
+        "satellites": "uint8",
+        "hdop": "float32",
+        "ignition": "bool",
+        "moving": "bool",
+        "odometer": "uint32",
+        "rpm": "uint16",
+        "fuel_level": "float32",
+        "engine_temp": "float32",
+        "battery_voltage": "float32"
+      },
+      "optional": ["lat", "lon", "alt", "accuracy", "fuel_level", "engine_temp", "battery_voltage"]
+    },
+    "2": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "event_code",
+        "6": "timestamp",
+        "7": "fix",
+        "8": "lat",
+        "9": "lon",
+        "10": "altitude",
+        "11": "speed",
+        "12": "heading",
+        "13": "signal"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "event_code": "uint8",
+        "timestamp": "uint32",
+        "fix": "uint8",
+        "lat": "float32",
+        "lon": "float32",
+        "altitude": "float32",
+        "speed": "float32",
+        "heading": "float32",
+        "signal": "int8"
+      },
+      "optional": ["lat", "lon", "altitude"]
+    }
+  }
+}

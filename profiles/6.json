@@ -1,0 +1,78 @@
+{
+  "profile": 6,
+  "name": "Air Quality",
+  "version": 1,
+  "types": {
+    "1": "reading",
+    "2": "alert"
+  },
+  "event_codes": {
+    "1": "high_co2",
+    "2": "high_pm25",
+    "3": "high_pm10",
+    "4": "high_voc",
+    "5": "low_battery"
+  },
+  "packets": {
+    "1": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "timestamp",
+        "6": "co2",
+        "7": "pm25",
+        "8": "pm10",
+        "9": "voc",
+        "10": "temperature",
+        "11": "humidity",
+        "12": "aqi",
+        "13": "battery_level"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "timestamp": "uint32",
+        "co2": "uint16",
+        "pm25": "float32",
+        "pm10": "float32",
+        "voc": "uint16",
+        "temperature": "float32",
+        "humidity": "float32",
+        "aqi": "uint16",
+        "battery_level": "float32"
+      },
+      "optional": ["voc", "temperature", "humidity", "aqi", "battery_level"]
+    },
+    "2": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "event_code",
+        "6": "timestamp",
+        "7": "value"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "event_code": "uint8",
+        "timestamp": "uint32",
+        "value": "float32"
+      },
+      "optional": []
+    }
+  }
+}

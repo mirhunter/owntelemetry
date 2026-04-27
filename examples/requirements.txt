@@ -1,0 +1,3 @@
+paho-mqtt>=1.6
+cbor2>=5.4
+psutil>=5.9

@@ -1,0 +1,75 @@
+{
+  "profile": 7,
+  "name": "Power/Energy Monitor",
+  "version": 1,
+  "types": {
+    "1": "reading",
+    "2": "alert"
+  },
+  "event_codes": {
+    "1": "over_voltage",
+    "2": "under_voltage",
+    "3": "over_current",
+    "4": "high_power",
+    "5": "power_lost",
+    "6": "power_restored"
+  },
+  "packets": {
+    "1": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "timestamp",
+        "6": "voltage",
+        "7": "current",
+        "8": "power",
+        "9": "energy",
+        "10": "power_factor",
+        "11": "frequency"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "timestamp": "uint32",
+        "voltage": "float32",
+        "current": "float32",
+        "power": "float32",
+        "energy": "float32",
+        "power_factor": "float32",
+        "frequency": "float32"
+      },
+      "optional": ["power_factor", "frequency"]
+    },
+    "2": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "event_code",
+        "6": "timestamp",
+        "7": "value"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "event_code": "uint8",
+        "timestamp": "uint32",
+        "value": "float32"
+      },
+      "optional": ["value"]
+    }
+  }
+}

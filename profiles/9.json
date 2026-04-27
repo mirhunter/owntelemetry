@@ -1,0 +1,78 @@
+{
+  "profile": 9,
+  "name": "Soil/Agricultural Sensor",
+  "version": 1,
+  "types": {
+    "1": "reading",
+    "2": "alert"
+  },
+  "event_codes": {
+    "1": "low_soil_moisture",
+    "2": "high_soil_moisture",
+    "3": "low_temperature",
+    "4": "high_temperature",
+    "5": "low_battery"
+  },
+  "packets": {
+    "1": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "timestamp",
+        "6": "soil_moisture",
+        "7": "soil_temperature",
+        "8": "soil_ec",
+        "9": "soil_ph",
+        "10": "ambient_temperature",
+        "11": "ambient_humidity",
+        "12": "lux",
+        "13": "battery_level"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "timestamp": "uint32",
+        "soil_moisture": "float32",
+        "soil_temperature": "float32",
+        "soil_ec": "float32",
+        "soil_ph": "float32",
+        "ambient_temperature": "float32",
+        "ambient_humidity": "float32",
+        "lux": "float32",
+        "battery_level": "float32"
+      },
+      "optional": ["soil_ec", "soil_ph", "ambient_temperature", "ambient_humidity", "lux", "battery_level"]
+    },
+    "2": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "event_code",
+        "6": "timestamp",
+        "7": "value"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "event_code": "uint8",
+        "timestamp": "uint32",
+        "value": "float32"
+      },
+      "optional": []
+    }
+  }
+}

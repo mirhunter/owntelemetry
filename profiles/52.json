@@ -1,0 +1,138 @@
+{
+  "profile": 52,
+  "name": "Model Rocket",
+  "version": 2,
+  "types": {
+    "1": "status",
+    "2": "flight",
+    "3": "event"
+  },
+  "event_codes": {
+    "1": "launch_detected",
+    "2": "motor_burnout",
+    "3": "apogee",
+    "4": "drogue_deploy",
+    "5": "main_deploy",
+    "6": "landing"
+  },
+  "packets": {
+    "1": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "timestamp",
+        "6": "lat",
+        "7": "lon",
+        "8": "altitude",
+        "9": "battery_voltage",
+        "10": "armed",
+        "11": "pyro_1",
+        "12": "pyro_2",
+        "13": "temperature",
+        "14": "rssi",
+        "15": "crc"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "timestamp": "uint32",
+        "lat": "float32",
+        "lon": "float32",
+        "altitude": "float32",
+        "battery_voltage": "float32",
+        "armed": "bool",
+        "pyro_1": "bool",
+        "pyro_2": "bool",
+        "temperature": "float32",
+        "rssi": "int8",
+        "crc": "uint16"
+      },
+      "optional": []
+    },
+    "2": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "timestamp",
+        "6": "altitude",
+        "7": "velocity",
+        "8": "accel_x",
+        "9": "accel_y",
+        "10": "accel_z",
+        "11": "roll",
+        "12": "pitch",
+        "13": "yaw",
+        "14": "pressure",
+        "15": "temperature",
+        "16": "lat",
+        "17": "lon",
+        "18": "rssi",
+        "19": "crc"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "timestamp": "uint64",
+        "altitude": "float32",
+        "velocity": "float32",
+        "accel_x": "float32",
+        "accel_y": "float32",
+        "accel_z": "float32",
+        "roll": "float32",
+        "pitch": "float32",
+        "yaw": "float32",
+        "pressure": "float32",
+        "temperature": "float32",
+        "lat": "float32",
+        "lon": "float32",
+        "rssi": "int8",
+        "crc": "uint16"
+      },
+      "optional": ["lat", "lon"]
+    },
+    "3": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "event_code",
+        "6": "timestamp",
+        "7": "altitude",
+        "8": "velocity",
+        "9": "rssi",
+        "10": "crc"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "event_code": "uint8",
+        "timestamp": "uint64",
+        "altitude": "float32",
+        "velocity": "float32",
+        "rssi": "int8",
+        "crc": "uint16"
+      },
+      "optional": []
+    }
+  }
+}

@@ -1,0 +1,210 @@
+{
+  "profile": 0,
+  "name": "System",
+  "version": 3,
+  "types": {
+    "1": "birth",
+    "2": "will",
+    "3": "ping",
+    "4": "pong",
+    "5": "command",
+    "6": "command_ack",
+    "7": "provision",
+    "8": "provision_ack"
+  },
+  "reason_codes": {
+    "1": "shutdown",
+    "2": "sleep",
+    "3": "restart",
+    "4": "error"
+  },
+  "command_codes": {
+    "1": "set_interval",
+    "2": "reboot",
+    "3": "request_birth",
+    "4": "factory_reset"
+  },
+  "command_status_codes": {
+    "1": "ok",
+    "2": "rejected",
+    "3": "unknown_command",
+    "4": "busy"
+  },
+  "provision_codes": {
+    "1": "set_key"
+  },
+  "provision_status_codes": {
+    "1": "ready",
+    "2": "rejected"
+  },
+  "packets": {
+    "1": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "profiles",
+        "6": "firmware",
+        "7": "interval"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "profiles": "array[uint8]",
+        "firmware": "string",
+        "interval": "uint16"
+      },
+      "optional": ["firmware"]
+    },
+    "2": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "reason",
+        "6": "timestamp"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "reason": "uint8",
+        "timestamp": "uint32"
+      },
+      "optional": []
+    },
+    "3": {
+      "direction": "s->e",
+      "fields": {
+        "0": "profile",
+        "1": "target_id",
+        "2": "mid",
+        "3": "type"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "target_id": "bytes",
+        "mid": "uint8",
+        "type": "uint8"
+      },
+      "optional": []
+    },
+    "4": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "ping_mid"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "ping_mid": "uint8"
+      },
+      "optional": []
+    },
+    "5": {
+      "direction": "s->e",
+      "fields": {
+        "0": "profile",
+        "1": "target_id",
+        "2": "mid",
+        "3": "type",
+        "4": "command_code",
+        "5": "command_data"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "target_id": "bytes",
+        "mid": "uint8",
+        "type": "uint8",
+        "command_code": "uint8",
+        "command_data": "bytes"
+      },
+      "optional": ["command_data"]
+    },
+    "6": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "command_mid",
+        "6": "status",
+        "7": "result"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "command_mid": "uint8",
+        "status": "uint8",
+        "result": "bytes"
+      },
+      "optional": ["result"]
+    },
+    "7": {
+      "direction": "s->e",
+      "fields": {
+        "0": "profile",
+        "1": "target_id",
+        "2": "mid",
+        "3": "type",
+        "4": "provision_code",
+        "5": "data"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "target_id": "bytes",
+        "mid": "uint8",
+        "type": "uint8",
+        "provision_code": "uint8",
+        "data": "bytes"
+      },
+      "optional": []
+    },
+    "8": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "provision_mid",
+        "6": "status"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "provision_mid": "uint8",
+        "status": "uint8"
+      },
+      "optional": []
+    }
+  }
+}

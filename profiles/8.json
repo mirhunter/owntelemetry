@@ -1,0 +1,85 @@
+{
+  "profile": 8,
+  "name": "Marine",
+  "version": 2,
+  "types": {
+    "1": "position",
+    "2": "alert"
+  },
+  "event_codes": {
+    "1": "anchor_drag",
+    "2": "man_overboard",
+    "3": "collision_risk",
+    "4": "low_battery"
+  },
+  "packets": {
+    "1": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "timestamp",
+        "6": "fix",
+        "7": "lat",
+        "8": "lon",
+        "9": "sog",
+        "10": "cog",
+        "11": "heading",
+        "12": "depth",
+        "13": "wind_speed",
+        "14": "wind_direction",
+        "15": "battery_voltage"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "timestamp": "uint32",
+        "fix": "uint8",
+        "lat": "float32",
+        "lon": "float32",
+        "sog": "float32",
+        "cog": "float32",
+        "heading": "float32",
+        "depth": "float32",
+        "wind_speed": "float32",
+        "wind_direction": "float32",
+        "battery_voltage": "float32"
+      },
+      "optional": ["lat", "lon", "heading", "depth", "wind_speed", "wind_direction", "battery_voltage"]
+    },
+    "2": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "event_code",
+        "6": "timestamp",
+        "7": "lat",
+        "8": "lon",
+        "9": "value"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "event_code": "uint8",
+        "timestamp": "uint32",
+        "lat": "float32",
+        "lon": "float32",
+        "value": "float32"
+      },
+      "optional": ["lat", "lon", "value"]
+    }
+  }
+}

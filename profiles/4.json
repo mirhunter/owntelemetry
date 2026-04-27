@@ -1,0 +1,94 @@
+{
+  "profile": 4,
+  "name": "Advanced Weather Station",
+  "version": 2,
+  "types": {
+    "1": "reading",
+    "2": "alert"
+  },
+  "event_codes": {
+    "1": "high_temperature",
+    "2": "low_temperature",
+    "3": "high_humidity",
+    "4": "low_humidity",
+    "5": "high_wind",
+    "6": "high_wind_gust",
+    "7": "high_rainfall_rate",
+    "8": "high_uv",
+    "9": "low_pressure",
+    "10": "high_pressure",
+    "11": "low_battery"
+  },
+  "packets": {
+    "1": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "timestamp",
+        "6": "temperature",
+        "7": "humidity",
+        "8": "pressure",
+        "9": "dew_point",
+        "10": "wind_speed",
+        "11": "wind_direction",
+        "12": "wind_gust",
+        "13": "rainfall",
+        "14": "rainfall_rate",
+        "15": "uv_index",
+        "16": "solar_radiation",
+        "17": "visibility",
+        "18": "battery_level"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "timestamp": "uint32",
+        "temperature": "float32",
+        "humidity": "float32",
+        "pressure": "float32",
+        "dew_point": "float32",
+        "wind_speed": "float32",
+        "wind_direction": "float32",
+        "wind_gust": "float32",
+        "rainfall": "float32",
+        "rainfall_rate": "float32",
+        "uv_index": "float32",
+        "solar_radiation": "float32",
+        "visibility": "float32",
+        "battery_level": "float32"
+      },
+      "optional": ["dew_point", "visibility"]
+    },
+    "2": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "event_code",
+        "6": "timestamp",
+        "7": "value"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "event_code": "uint8",
+        "timestamp": "uint32",
+        "value": "float32"
+      },
+      "optional": []
+    }
+  }
+}

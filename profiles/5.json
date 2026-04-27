@@ -1,0 +1,78 @@
+{
+  "profile": 5,
+  "name": "Asset Tracker",
+  "version": 2,
+  "types": {
+    "1": "location",
+    "2": "alert"
+  },
+  "event_codes": {
+    "1": "low_battery",
+    "2": "motion_start",
+    "3": "motion_stop",
+    "4": "geofence_exit",
+    "5": "geofence_enter"
+  },
+  "packets": {
+    "1": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "timestamp",
+        "6": "fix",
+        "7": "lat",
+        "8": "lon",
+        "9": "battery_level",
+        "10": "moving",
+        "11": "accuracy"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "timestamp": "uint32",
+        "fix": "uint8",
+        "lat": "float32",
+        "lon": "float32",
+        "battery_level": "float32",
+        "moving": "bool",
+        "accuracy": "float32"
+      },
+      "optional": ["lat", "lon", "accuracy"]
+    },
+    "2": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "event_code",
+        "6": "timestamp",
+        "7": "lat",
+        "8": "lon",
+        "9": "value"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "event_code": "uint8",
+        "timestamp": "uint32",
+        "lat": "float32",
+        "lon": "float32",
+        "value": "float32"
+      },
+      "optional": ["lat", "lon", "value"]
+    }
+  }
+}

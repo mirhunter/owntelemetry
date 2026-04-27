@@ -1,0 +1,40 @@
+{
+  "profile": 1,
+  "name": "Basic GPS Telemetry",
+  "version": 3,
+  "types": {
+    "1": "location"
+  },
+  "packets": {
+    "1": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "timestamp",
+        "6": "fix",
+        "7": "lat",
+        "8": "lon",
+        "9": "alt",
+        "10": "accuracy"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "timestamp": "uint32",
+        "fix": "uint8",
+        "lat": "float32",
+        "lon": "float32",
+        "alt": "float32",
+        "accuracy": "float32"
+      },
+      "optional": ["lat", "lon", "alt", "accuracy"]
+    }
+  }
+}

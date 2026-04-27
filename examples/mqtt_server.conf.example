@@ -1,0 +1,9 @@
+[mqtt]
+server = mqtt.example.com
+port = 1883
+username = your_username
+password = your_password
+base_topic = ot
+
+[server]
+log_file = owntelemetry.log

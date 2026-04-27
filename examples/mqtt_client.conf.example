@@ -1,0 +1,18 @@
+[mqtt]
+server = mqtt.example.com
+port = 1883
+username = your_username
+password = your_password
+base_topic = ot
+
+[client]
+interval = 30
+debug = false
+json = false
+
+[thresholds]
+cpu_load = 90.0
+cpu_temp = 80.0
+memory_used = 90.0
+disk_used = 90.0
+swap_used = 80.0

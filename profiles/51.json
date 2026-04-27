@@ -1,0 +1,86 @@
+{
+  "profile": 51,
+  "name": "Server Health Monitor",
+  "version": 2,
+  "types": {
+    "1": "status",
+    "2": "alert"
+  },
+  "event_codes": {
+    "1": "high_cpu_load",
+    "2": "high_cpu_temp",
+    "3": "high_memory_usage",
+    "4": "high_disk_usage",
+    "5": "high_swap_usage"
+  },
+  "packets": {
+    "1": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "timestamp",
+        "6": "cpu_load",
+        "7": "cpu_temp",
+        "8": "load_1",
+        "9": "load_5",
+        "10": "load_15",
+        "11": "memory_used",
+        "12": "swap_used",
+        "13": "disk_used",
+        "14": "net_rx",
+        "15": "net_tx",
+        "16": "uptime",
+        "17": "processes"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "timestamp": "uint32",
+        "cpu_load": "float32",
+        "cpu_temp": "float32",
+        "load_1": "float32",
+        "load_5": "float32",
+        "load_15": "float32",
+        "memory_used": "float32",
+        "swap_used": "float32",
+        "disk_used": "float32",
+        "net_rx": "uint32",
+        "net_tx": "uint32",
+        "uptime": "uint32",
+        "processes": "uint16"
+      },
+      "optional": []
+    },
+    "2": {
+      "direction": "e->s",
+      "fields": {
+        "0": "profile",
+        "1": "id",
+        "2": "mid",
+        "3": "ack",
+        "4": "type",
+        "5": "event_code",
+        "6": "timestamp",
+        "7": "value"
+      },
+      "field_types": {
+        "profile": "uint8",
+        "id": "bytes",
+        "mid": "uint8",
+        "ack": "bool",
+        "type": "uint8",
+        "event_code": "uint8",
+        "timestamp": "uint32",
+        "value": "float32"
+      },
+      "optional": []
+    }
+  }
+}
