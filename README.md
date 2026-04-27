@@ -125,30 +125,37 @@ The base topic (`ot`) is configurable in the conf file.
 
 ## Libraries
 
-A codec library handles encoding and decoding for you, driven directly by the profile schemas.
+A codec library handles encoding and decoding for you, driven directly by the profile schemas. See [`lib/python/`](lib/python/) for full documentation.
+
+```bash
+pip install lib/python
+```
 
 ```python
 from owntelemetry import OwnTelemetry
 
 ot = OwnTelemetry("./profiles", [0, 51])
 
+# Encode — mid is auto-generated per endpoint; any field can be overridden
 payload, used = ot.encode(51, 1, {
-    "id": endpoint_id,
+    "id": endpoint_id,          # bytes or hex string
     "timestamp": int(time.time()),
     "cpu_load": 45.2,
     ...
 })
-mid_used = used["mid"]   # auto-generated; override by passing "mid" in fields
+mid_used = used["mid"]
 
+# Decode cleartext
 packet = ot.decode(payload)
 # → {"profile": 51, "id": "abc...", "cpu_load": 45.2,
 #    "_profile_name": "Server Health Monitor", "_type_name": "status"}
-```
 
-Install the Python library:
+# Encode with encryption
+payload, used = ot.encode(51, 1, fields, key=my_key)
 
-```bash
-pip install lib/python
+# Decode — get_key handles encrypted and cleartext transparently
+packet = ot.decode(payload, get_key=lambda endpoint_id: key_store.get(endpoint_id))
+# → {..., "_encrypted": True}
 ```
 
 Libraries for other languages are planned.
