@@ -99,6 +99,26 @@ python3 -u examples/mqtt_client.py
 
 On startup the client sends a **birth** packet declaring its profiles and reporting interval. On clean exit (`Ctrl-C`) it sends a **will** packet with `reason=shutdown`. The broker delivers the MQTT last-will automatically on unexpected disconnect.
 
+Each logged server line includes `_wire_bytes` — the raw byte count of the packet on the wire before decoding.
+
+### Encryption
+
+To enable per-endpoint encryption, add a 16-byte hex key to `mqtt_client.conf`:
+
+```ini
+[client]
+key = 00112233445566778899aabbccddeeff
+```
+
+Then run the client once to find its endpoint ID in the startup output (`Endpoint ID : <hex>`), and register the same key in `mqtt_server.conf`:
+
+```ini
+[keys]
+<endpoint_id_hex> = 00112233445566778899aabbccddeeff
+```
+
+Endpoints without a key entry are received cleartext — the server handles mixed traffic transparently. Encryption is XOR-keystream with a per-packet nonce; see [booklet.md](booklet.md) for full details.
+
 ### Useful flags
 
 | Flag | Effect |
